@@ -1,17 +1,3 @@
-// Даны два числа. Определить цифры, входящие в запись как первого, так и второго числа.
-// Входные данные
-// 	Программа получает на вход два числа.
-// 	Гарантируется, что цифры в числах не повторяются. Числа в пределах от 0 до 10000.
-// Выходные данные
-// 	Программа должна вывести цифры, которые имеются в обоих числах, через пробел.
-// 	Цифры выводятся в порядке их нахождения в первом числе.
-// 	Внимание! Если вам сложно решить эту задачу, пропустите и изучайте материал дальше, затем вернетесь к этой задаче позже.
-
-// Sample Input:
-// 	564 8954
-// Sample Output:
-// 	5 4
-
 package main
 
 import (
@@ -29,19 +15,44 @@ var (
 
 func init() {
 	fmt.Scan(&numberFirst, &numberSecond)
-	string_splitter(numberFirst, firstArray)
-	string_splitter(numberSecond, secondArray)
-}
 
-func string_splitter(number string, array []int) {
-	split := strings.Split(number, "")
-	for i, s := range split {
-		array[i], _ = strconv.Atoi(s)
-	}
-
+	firstArray = stringSplitter(numberFirst)
+	secondArray = stringSplitter(numberSecond)
 }
 
 func main() {
+	findMatching(firstArray, secondArray)
+}
 
+func stringSplitter(number string) []int {
+	var (
+		array []int
+		split = strings.Split(number, "")
+	)
 
+	for i:= 0; i <len(split); i++ {
+		element, _ := strconv.Atoi(split[i])
+		array = append(array, element)
+	}
+
+	return array
+}
+
+func findMatching(firstArr []int, secondArr []int) {
+	for i:= range firstArr {
+		index := indexOf(firstArr[i], secondArr)
+
+		if index != -1 {
+			fmt.Printf("%v ",secondArr[index])
+		}
+	}
+}
+
+func indexOf(element int, data []int) (int) {
+	for k, v := range data {
+		if element == v {
+			return k
+		}
+	}
+	return -1    //not found.
 }
